@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "skyrim-alchemy-app": {
+      "hosting": {
+        "skyrim-alchemy-admin": [
+          "skyrim-alchemy-admin"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "skyrim-alchemy-app"
+  }
+}
