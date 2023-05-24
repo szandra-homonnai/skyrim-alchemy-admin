@@ -6,7 +6,10 @@ const envPath = './src/environments/.env';
 
 dotenv.config({ path: envPath });
 
-const environmentFile = `export const environment = {
+const environmentFile = `
+import { Environment } from '@environments/environment.interface';
+
+export const environment: Environment = {
   firebase: {
     projectId: '${process.env.FIREBASE_PROJECT_ID}',
     appId: '${process.env.FIREBASE_APP_ID}',
