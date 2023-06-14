@@ -21,6 +21,8 @@
 // Utilities
 @import "bootstrap/scss/utilities/api";
 
+@import "./app/style/variables.scss";
+
 html,
 body {
   height: 100%;
@@ -30,4 +32,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: rgb(3, 27, 91);
+  background: linear-gradient(135deg, rgba(3, 27, 91, 1) 0%, rgba(5, 72, 138, 1) 35%, $cyan 100%);
+  // 031b5b, 05488a, 02cd98
 }

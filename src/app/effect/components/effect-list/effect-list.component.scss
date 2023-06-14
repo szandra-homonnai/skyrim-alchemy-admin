@@ -1,0 +1,18 @@
+@import "../../../style/variables.scss";
+
+tr.effect-row {
+  cursor: pointer;
+}
+
+tr.effect-details-row {
+  height: 0;
+}
+
+tr.closed-row td {
+  border: 0;
+}
+
+td mat-chip {
+  background-color: white;
+  border: $cyan 1px solid;
+}

@@ -3,7 +3,7 @@ import { CollectionReference, DocumentReference, Firestore, addDoc, collection, 
 import { Ingredient, IngredientDocument } from '@app/interfaces/ingredient.interface';
 import { EffectService } from '@app/services/effect.service';
 import { GameService } from '@app/services/game.service';
-import { Observable } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +27,35 @@ export class IngredientService {
 
   public list(): Observable<IngredientDocument[]> {
     return collectionData<IngredientDocument>(this.collection, { idField: 'id' });
+  }
+
+  public getNameMapByEffectIds(): Observable<Map<string, string[]>> {
+    return this.list()
+      .pipe(
+        switchMap((ingredients: IngredientDocument[]) => {
+          const map: Map<string, string[]> = new Map();
+
+          for (const ingredient of ingredients) {
+            map.set(ingredient.effect1.id,
+              map.has(ingredient.effect1.id) ? [...map.get(ingredient.effect1.id), ingredient.name] : [ingredient.name]
+            );
+
+            map.set(ingredient.effect2.id,
+              map.has(ingredient.effect2.id) ? [...map.get(ingredient.effect2.id), ingredient.name] : [ingredient.name]
+            );
+
+            map.set(ingredient.effect3.id,
+              map.has(ingredient.effect3.id) ? [...map.get(ingredient.effect3.id), ingredient.name] : [ingredient.name]
+            );
+
+            map.set(ingredient.effect4.id,
+              map.has(ingredient.effect4.id) ? [...map.get(ingredient.effect4.id), ingredient.name] : [ingredient.name]
+            );
+          }
+
+          return of(map);
+        })
+      );
   }
 
   public create(ingredient: Ingredient): Promise<DocumentReference> {
