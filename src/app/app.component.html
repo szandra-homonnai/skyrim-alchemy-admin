@@ -3,20 +3,20 @@
   <header class="w-100 d-flex flex-row flex-wrap align-items-center py-2 py-sm-3 py-md-4 py-lg-5 text-white">
     <h1 class="me-3 mb-0 flex-grow-1">Skyrim Alchemy</h1>
 
-    <button mat-icon-button class="me-2 d-block d-sm-none">
+    <button mat-icon-button class="me-2 d-block d-sm-none" routerLink="/effects">
       <mat-icon>local_drink</mat-icon>
     </button>
 
-    <button mat-button class="me-3 d-none d-sm-flex menu-button">
+    <button mat-button class="me-3 d-none d-sm-flex menu-button" routerLink="/effects">
       <mat-icon class="me-2">local_drink</mat-icon>
       <span>Effects</span>
     </button>
 
-    <button mat-icon-button class="d-block d-sm-none" routerLink="/effects">
+    <button mat-icon-button class="d-block d-sm-none" routerLink="/ingredients">
       <mat-icon>eco</mat-icon>
     </button>
 
-    <button mat-button class="d-none d-sm-flex menu-button" routerLink="/effects">
+    <button mat-button class="d-none d-sm-flex menu-button" routerLink="/ingredients">
       <mat-icon class="me-2">eco</mat-icon>
       <span>Ingredients</span>
     </button>
