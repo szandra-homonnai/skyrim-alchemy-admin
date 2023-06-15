@@ -1,0 +1,80 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="row">
+
+  <div class="col-12 col-md-6 col-lg-4">
+    <mat-form-field class="w-100">
+      <mat-label>Ingredient's name</mat-label>
+      <input matInput formControlName="name" required>
+      <mat-error>This field is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4">
+    <mat-form-field class="w-100">
+      <mat-label>1st effect</mat-label>
+      <mat-select formControlName="effect1" required>
+        <mat-option *ngFor="let effect of effects" [value]="effect.id">
+          {{ effect.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error>This field is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4">
+    <mat-form-field class="w-100">
+      <mat-label>2nd effect</mat-label>
+      <mat-select formControlName="effect2" required>
+        <mat-option *ngFor="let effect of effects" [value]="effect.id">
+          {{ effect.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error>This field is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4">
+    <mat-form-field class="w-100">
+      <mat-label>3rd effect</mat-label>
+      <mat-select formControlName="effect3" required>
+        <mat-option *ngFor="let effect of effects" [value]="effect.id">
+          {{ effect.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error>This field is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4">
+    <mat-form-field class="w-100">
+      <mat-label>4th effect</mat-label>
+      <mat-select formControlName="effect4" required>
+        <mat-option *ngFor="let effect of effects" [value]="effect.id">
+          {{ effect.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error>This field is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4">
+    <mat-form-field class="w-100">
+      <mat-label>Game</mat-label>
+      <mat-select formControlName="game" required>
+        <mat-option *ngFor="let game of games" [value]="game.id">
+          {{ game.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error>This field is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 text-center">
+    <button mat-flat-button type="submit" color="primary" class="ml-auto mr-3" [disabled]="form.invalid">
+      Save
+    </button>
+
+    <button mat-flat-button type="button" (click)="clearForm()">
+      Cancel
+    </button>
+  </div>
+</form>
