@@ -1,9 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authGuard } from '@app/auth/guards/auth.guard';
 import { EffectListComponent } from '@app/effect/components/effect-list/effect-list.component';
 
 const routes: Routes = [
-  { path: '', component: EffectListComponent }
+  {
+    path: '',
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
+    children: [
+      { path: '', component: EffectListComponent }
+    ]
+  }
 ];
 
 @NgModule({
