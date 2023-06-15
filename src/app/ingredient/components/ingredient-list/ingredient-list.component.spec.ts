@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IngredientListComponent } from '@app/ingredient/ingredient-list/ingredient-list.component';
+import { IngredientListComponent } from '@app/ingredient/components/ingredient-list/ingredient-list.component';
 
 describe('IngredientListComponent', () => {
   let component: IngredientListComponent;
