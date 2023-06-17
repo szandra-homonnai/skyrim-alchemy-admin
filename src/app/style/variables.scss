@@ -1,2 +1,50 @@
-$cyan: #02CD98;
-$darkBlue: #041952;
+@use '@angular/material' as mat;
+
+$primary: #02CD98;
+$secondary: #041952;
+
+$primary-palette: (
+  50: #dff7ed,
+  100: #b0e9d2,
+  200: #77dbb5,
+  300: #02cd97,
+  400: #00c180,
+  500: #00b56b,
+  600: #00a560,
+  700: #009352,
+  800: #008245,
+  900: #00622f,
+  contrast: (50: $secondary,
+    100: $secondary,
+    200: $secondary,
+    300: $secondary,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white)
+);
+
+$secondary-palette: (
+  50:#e5e7f0,
+  100: #bdc3da,
+  200:#929dc1,
+  300: #6977a8,
+  400: #4a5c97,
+  500: #294188,
+  600: #233a7f,
+  700: #1a3274,
+  800: #112868,
+  900: #041952,
+  contrast: (50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white)
+);

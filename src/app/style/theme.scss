@@ -1,0 +1,51 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+@import './variables.scss';
+
+$app-primary: mat.define-palette($primary-palette, 300);
+$app-accent: mat.define-palette($primary-palette, 300);
+
+$app-typography: mat.define-typography-config($font-family: 'Inter');
+
+$app-theme: mat.define-light-theme((color: (primary: $app-primary, accent: $app-accent, ), typography: $app-typography, ));
+
+@include mat.all-component-themes($app-theme);
+
+// Include the theme mixins for other components you use here.
+
+.mat-typography,
+.mat-typography h1,
+.mat-typography h2 {
+  font-family: 'Inter', sans-serif !important;
+  letter-spacing: 0.2em;
+  font-weight: 300;
+}
+
+button.mdc-button.mat-primary {
+  color: $secondary;
+}
+
+button.mdc-button.mat-primary:disabled {
+  background-color: rgba(mat.get-color-from-palette($primary-palette, 900), 0.50);
+  color: rgba($secondary, 0.70);
+}
+
+button.mdc-button {
+  padding: 1.5rem;
+}
+
+button.mdc-button.mat-unthemed {
+  color: white;
+  border: 1px solid white;
+}
+
+// .mat-mdc-text-field-wrapper.mdc-text-field {
+//   border-radius: 4px;
+// }
+
+// .mat-mdc-form-field.mat-mdc-form-field-type-mat-select.mat-focused > .mat-mdc-text-field-wrapper.mdc-text-field {
+//   border-bottom-left-radius: 0px;
+//   border-bottom-right-radius: 0px;
+// }

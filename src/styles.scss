@@ -1,3 +1,5 @@
+@import "./app/style/variables.scss";
+
 // Configuration
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
@@ -21,18 +23,16 @@
 // Utilities
 @import "bootstrap/scss/utilities/api";
 
-@import "./app/style/variables.scss";
+@import "./app/style/theme.scss";
 
 html,
 body {
   height: 100%;
 }
 
-
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  background: rgb(3, 27, 91);
-  background: linear-gradient(135deg, rgba(3, 27, 91, 1) 0%, rgba(5, 72, 138, 1) 35%, $cyan 100%);
-  // 031b5b, 05488a, 02cd98
+  font-family: 'Inter', sans-serif;
+  color: $secondary;
+  background-color: #F0F0F0;
 }
