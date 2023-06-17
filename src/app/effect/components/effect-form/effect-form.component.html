@@ -1,0 +1,44 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="row">
+
+  <div class="col-12 col-md-6 col-lg-4">
+    <mat-form-field class="w-100">
+      <mat-label>Effect's name</mat-label>
+      <input matInput formControlName="name" required>
+      <mat-error>This field is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4">
+    <mat-form-field class="w-100">
+      <mat-label>School</mat-label>
+      <mat-select formControlName="school" required>
+        <mat-option *ngFor="let school of schools" [value]="school">
+          {{ school }}
+        </mat-option>
+      </mat-select>
+      <mat-error>This field is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-4">
+    <mat-form-field class="w-100">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="type" required>
+        <mat-option *ngFor="let type of types" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+      <mat-error>This field is required</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 text-center">
+    <button mat-flat-button type="submit" color="primary" class="ml-auto mr-3" [disabled]="form.invalid">
+      Save
+    </button>
+
+    <button mat-flat-button type="button" (click)="clearForm()">
+      Cancel
+    </button>
+  </div>
+</form>
