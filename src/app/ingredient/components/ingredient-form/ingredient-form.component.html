@@ -1,3 +1,8 @@
+<h3 class="w-100 mb-4 pb-3 border-bottom border-white text-center text-uppercase">
+  <ng-container *ngIf="!editedIngredient; else editTitleBlock">Add new ingredient</ng-container>
+  <ng-template #editTitleBlock>Edit ingredient</ng-template>
+</h3>
+
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="row">
 
   <div class="col-12 col-md-6 col-lg-4">
@@ -8,7 +13,7 @@
     </mat-form-field>
   </div>
 
-  <div class="col-12 col-md-6 col-lg-4">
+  <div class="col-12 col-md-6 col-lg-4 mt-2 mt-md-0">
     <mat-form-field class="w-100">
       <mat-label>1st effect</mat-label>
       <mat-select formControlName="effect1" required>
@@ -20,7 +25,7 @@
     </mat-form-field>
   </div>
 
-  <div class="col-12 col-md-6 col-lg-4">
+  <div class="col-12 col-md-6 col-lg-4 mt-2 mt-lg-0">
     <mat-form-field class="w-100">
       <mat-label>2nd effect</mat-label>
       <mat-select formControlName="effect2" required>
@@ -32,7 +37,7 @@
     </mat-form-field>
   </div>
 
-  <div class="col-12 col-md-6 col-lg-4">
+  <div class="col-12 col-md-6 col-lg-4 mt-2">
     <mat-form-field class="w-100">
       <mat-label>3rd effect</mat-label>
       <mat-select formControlName="effect3" required>
@@ -44,7 +49,7 @@
     </mat-form-field>
   </div>
 
-  <div class="col-12 col-md-6 col-lg-4">
+  <div class="col-12 col-md-6 col-lg-4 mt-2">
     <mat-form-field class="w-100">
       <mat-label>4th effect</mat-label>
       <mat-select formControlName="effect4" required>
@@ -56,7 +61,7 @@
     </mat-form-field>
   </div>
 
-  <div class="col-12 col-md-6 col-lg-4">
+  <div class="col-12 col-md-6 col-lg-4 mt-2">
     <mat-form-field class="w-100">
       <mat-label>Game</mat-label>
       <mat-select formControlName="game" required>
@@ -68,8 +73,8 @@
     </mat-form-field>
   </div>
 
-  <div class="col-12 text-center">
-    <button mat-flat-button type="submit" color="primary" class="me-3 text-uppercase" [disabled]="form.invalid">
+  <div class="col-12 mt-2 text-center">
+    <button mat-flat-button type="submit" color="primary" class="me-3 text-uppercase">
       Save
     </button>
 

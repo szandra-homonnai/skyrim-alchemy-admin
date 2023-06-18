@@ -7,34 +7,38 @@
       <img src="/assets/images/logo.png" alt="Skyrim Alchemy logo">
     </div>
 
-    <h1 class="mx-3 mb-0 flex-grow-1 text-uppercase">
+    <h2 class="mx-3 mb-0 flex-grow-1 text-uppercase fw-lighter">
       <span>Skyrim</span><br>
       <span>Alchemy Lab</span>
-    </h1>
+    </h2>
 
-    <button *ngIf="isLoggedIn" mat-icon-button class="me-2 d-block d-sm-none" routerLink="/effects">
+    <button *ngIf="isLoggedIn" mat-icon-button class="me-2 d-block d-lg-none" routerLink="/effects"
+      routerLinkActive="active-menu-button">
       <mat-icon>local_drink</mat-icon>
     </button>
 
-    <button *ngIf="isLoggedIn" mat-button class="me-3 d-none d-sm-flex text-uppercase" routerLink="/effects">
+    <button *ngIf="isLoggedIn" mat-button class="me-3 d-none d-lg-flex text-uppercase" routerLink="/effects"
+      routerLinkActive="active-menu-button">
       <mat-icon class="me-2">local_drink</mat-icon>
       <span>Effects</span>
     </button>
 
-    <button *ngIf="isLoggedIn" mat-icon-button class="me-2 d-block d-sm-none" routerLink="/ingredients">
+    <button *ngIf="isLoggedIn" mat-icon-button class="me-2 d-block d-lg-none" routerLink="/ingredients"
+      routerLinkActive="active-menu-button">
       <mat-icon>eco</mat-icon>
     </button>
 
-    <button *ngIf="isLoggedIn" mat-button class="me-3 d-none d-sm-flex text-uppercase" routerLink="/ingredients">
+    <button *ngIf="isLoggedIn" mat-button class="me-3 d-none d-lg-flex text-uppercase" routerLink="/ingredients"
+      routerLinkActive="active-menu-button">
       <mat-icon class="me-2">eco</mat-icon>
       <span>Ingredients</span>
     </button>
 
-    <button *ngIf="isLoggedIn" mat-icon-button class="d-block d-sm-none" (click)="onClickLogout()">
+    <button *ngIf="isLoggedIn" mat-icon-button class="d-block d-lg-none" (click)="onClickLogout()">
       <mat-icon>exit_to_app</mat-icon>
     </button>
 
-    <button *ngIf="isLoggedIn" mat-button class="d-none d-sm-flex text-uppercase" (click)="onClickLogout()">
+    <button *ngIf="isLoggedIn" mat-button class="d-none d-lg-flex text-uppercase" (click)="onClickLogout()">
       <mat-icon>exit_to_app</mat-icon>
       <span>Logout</span>
     </button>

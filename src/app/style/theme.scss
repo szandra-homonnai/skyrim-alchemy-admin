@@ -6,10 +6,11 @@
 
 $app-primary: mat.define-palette($primary-palette, 300);
 $app-accent: mat.define-palette($primary-palette, 300);
+$app-warn: mat.define-palette(mat.$red-palette, 400);
 
 $app-typography: mat.define-typography-config($font-family: 'Inter');
 
-$app-theme: mat.define-light-theme((color: (primary: $app-primary, accent: $app-accent, ), typography: $app-typography, ));
+$app-theme: mat.define-light-theme((color: (primary: $app-primary, accent: $app-accent, warn: $app-warn ), typography: $app-typography, ));
 
 @include mat.all-component-themes($app-theme);
 
@@ -17,14 +18,15 @@ $app-theme: mat.define-light-theme((color: (primary: $app-primary, accent: $app-
 
 .mat-typography,
 .mat-typography h1,
-.mat-typography h2 {
+.mat-typography h2,
+.mat-typography h3 {
   font-family: 'Inter', sans-serif !important;
-  letter-spacing: 0.2em;
-  font-weight: 300;
+  letter-spacing: 0.25em;
+  font-weight: 500;
 }
 
 button.mdc-button.mat-primary {
-  color: $secondary;
+  color: $body-color;
 }
 
 button.mdc-button.mat-primary:disabled {
@@ -34,11 +36,28 @@ button.mdc-button.mat-primary:disabled {
 
 button.mdc-button {
   padding: 1.5rem;
+  letter-spacing: 0.25em;
+  font-weight: 400;
 }
 
 button.mdc-button.mat-unthemed {
   color: white;
   border: 1px solid white;
+}
+
+table.mat-mdc-table,
+table.mat-mdc-table .mdc-data-table__header-cell,
+table.mat-mdc-table .mdc-data-table__cell {
+  color: $body-color;
+}
+
+mat-chip.mat-mdc-chip {
+  background-color: white !important;
+  border: $primary 1px solid;
+}
+
+mat-chip.mat-mdc-chip .mat-mdc-chip-action-label {
+  color: $primary !important;
 }
 
 // .mat-mdc-text-field-wrapper.mdc-text-field {

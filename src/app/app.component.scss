@@ -3,7 +3,7 @@
 .sky-background {
   position: absolute;
   width: 100%;
-  height: 50vh;
+  height: 75vh;
   left: 0;
   top: 0;
 
@@ -28,4 +28,9 @@
   img {
     height: 100%;
   }
+}
+
+.active-menu-button {
+  background-color: white;
+  color: $body-color !important;
 }

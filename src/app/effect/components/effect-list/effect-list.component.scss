@@ -1,9 +1,5 @@
 @import "../../../style/variables.scss";
 
-tr.effect-row {
-  cursor: pointer;
-}
-
 tr.effect-details-row {
   height: 0;
 }
@@ -12,7 +8,14 @@ tr.closed-row td {
   border: 0;
 }
 
-td mat-chip {
-  background-color: white;
-  border: $primary 1px solid;
+tr.edited-row {
+  background-color: $primary;
+
+  &:hover {
+    background-color: rgba($primary, 0.5);
+  }
+
+  mat-icon {
+    color: $body-color;
+  }
 }

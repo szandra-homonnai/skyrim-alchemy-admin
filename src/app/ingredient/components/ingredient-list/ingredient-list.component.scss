@@ -1,0 +1,13 @@
+@import "../../../style/variables.scss";
+
+tr.edited-row {
+  background-color: $primary;
+
+  &:hover {
+    background-color: rgba($primary, 0.5);
+  }
+
+  mat-icon {
+    color: $body-color;
+  }
+}

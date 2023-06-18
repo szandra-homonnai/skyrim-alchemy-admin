@@ -1,9 +1,9 @@
 <div class="d-flex flex-column justify-content-center align-items-center">
 
   <div class="py-3 px-5 bg-secondary bg-opacity-50 text-white">
-    <h2 class="w-100 mb-4 pb-3 border-bottom border-white text-center text-uppercase fw-normal">
+    <h3 class="w-100 mb-4 pb-3 border-bottom border-white text-center text-uppercase">
       Login
-    </h2>
+    </h3>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <mat-form-field class="w-100 mb-3">
@@ -23,7 +23,7 @@
     </form>
 
     <div class="d-flex justify-content-center mb-3">
-      <button mat-flat-button color="primary" class="text-uppercase" [disabled]="form.invalid" (click)="onSubmit()">
+      <button mat-flat-button color="primary" class="text-uppercase" (click)="onSubmit()">
         Login
       </button>
     </div>

@@ -1,3 +1,8 @@
+<h3 class="w-100 mb-4 pb-3 border-bottom border-white text-center text-uppercase">
+  <ng-container *ngIf="!editedEffect; else editTitleBlock">Add new effect</ng-container>
+  <ng-template #editTitleBlock>Edit effect</ng-template>
+</h3>
+
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="row">
 
   <div class="col-12 col-md-6 col-lg-4">
@@ -8,7 +13,7 @@
     </mat-form-field>
   </div>
 
-  <div class="col-12 col-md-6 col-lg-4">
+  <div class="col-12 col-md-6 col-lg-4 mt-2 mt-md-0">
     <mat-form-field class="w-100">
       <mat-label>School</mat-label>
       <mat-select formControlName="school" required>
@@ -20,7 +25,7 @@
     </mat-form-field>
   </div>
 
-  <div class="col-12 col-md-6 col-lg-4">
+  <div class="col-12 col-md-6 col-lg-4 mt-2 mt-lg-0">
     <mat-form-field class="w-100">
       <mat-label>Type</mat-label>
       <mat-select formControlName="type" required>
@@ -32,8 +37,8 @@
     </mat-form-field>
   </div>
 
-  <div class="col-12 text-center">
-    <button mat-flat-button type="submit" color="primary" class="me-3 text-uppercase" [disabled]="form.invalid">
+  <div class="col-12 mt-2 text-center">
+    <button mat-flat-button type="submit" color="primary" class="me-3 text-uppercase">
       Save
     </button>
 
