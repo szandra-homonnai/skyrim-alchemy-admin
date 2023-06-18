@@ -1,0 +1,47 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Set environment variables
+      run: |
+        touch ./src/environments/.env
+        echo FIREBASE_PROJECT_ID=${{ vars.FIREBASE_PROJECT_ID }} >> ./src/environments/.env
+        echo FIREBASE_APP_ID=${{ vars.FIREBASE_APP_ID }} >> ./src/environments/.env
+        echo FIREBASE_DATABASE_URL=${{ vars.FIREBASE_DATABASE_URL }} >> ./src/environments/.env
+        echo FIREBASE_STORAGE_BUCKET=${{ vars.FIREBASE_STORAGE_BUCKET }} >> ./src/environments/.env
+        echo FIREBASE_LOCATION_ID=${{ vars.FIREBASE_LOCATION_ID }} >> ./src/environments/.env
+        echo FIREBASE_API_KEY=${{ vars.FIREBASE_API_KEY }} >> ./src/environments/.env
+        echo FIREBASE_AUTH_DOMAIN=${{ vars.FIREBASE_AUTH_DOMAIN }} >> ./src/environments/.env
+        echo FIREBASE_MESSAGING_SENDER_ID=${{ vars.FIREBASE_MESSAGING_SENDER_ID }} >> ./src/environments/.env
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build
+      run: npm run build:ci
+
+    - name: Deploy to Firebase
+      env:
+        FIREBASE_TOKEN: ${{ vars.FIREBASE_TOKEN }}
+      run: npm run deploy:ci
