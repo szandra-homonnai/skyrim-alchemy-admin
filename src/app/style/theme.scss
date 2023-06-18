@@ -25,6 +25,11 @@ $app-theme: mat.define-light-theme((color: (primary: $app-primary, accent: $app-
   font-weight: 500;
 }
 
+.mat-mdc-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled),
+.mat-mdc-form-field .mat-mdc-form-field-focus-overlay {
+  background-color: white;
+}
+
 button.mdc-button.mat-primary {
   color: $body-color;
 }
@@ -49,6 +54,10 @@ table.mat-mdc-table,
 table.mat-mdc-table .mdc-data-table__header-cell,
 table.mat-mdc-table .mdc-data-table__cell {
   color: $body-color;
+}
+
+table.mat-mdc-table .mdc-data-table__header-cell {
+  font-weight: 600;
 }
 
 mat-chip.mat-mdc-chip {

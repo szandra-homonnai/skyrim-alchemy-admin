@@ -2,15 +2,21 @@
   <app-effect-form [(editedEffect)]="editedEffect"></app-effect-form>
 </div>
 
-<div class="bg-white p-4 rounded-1">
-  <h3 class="text-uppercase ps-3">List of Effects</h3>
+<div class="bg-white py-4 px-5 rounded-1">
+  <div class="d-flex flex-row flex-wrap align-items-center">
+    <h3 class="text-uppercase flex-grow-1 fw-semibold">List of Effects</h3>
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input matInput [formControl]="searchControl">
+    </mat-form-field>
+  </div>
 
   <div class="overflow-auto">
     <table mat-table class="w-100 border-top" [dataSource]="dataSource" multiTemplateDataRows matSort
       matSortActive="name" matSortDirection="asc">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+        <td mat-cell *matCellDef="let element" class="fw-semibold"> {{ element.name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="school">

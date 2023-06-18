@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Effect } from '@app/interfaces/effect.interface';
@@ -30,12 +31,22 @@ export class EffectListComponent implements AfterViewInit, OnDestroy {
   public editedEffect: Effect;
   public expandedEffect: Effect;
 
+  public searchControl: FormControl<string>;
+
   @ViewChild(MatSort) public sort: MatSort;
 
   constructor(
     private effectService: EffectService,
     private ingredientService: IngredientService
   ) {
+    this.searchControl = new FormControl('');
+
+    this.searchControl.valueChanges
+      .pipe(takeUntil(this.unsubsribe))
+      .subscribe((value: string) => {
+        this.dataSource.filter = value.trim().toLowerCase();
+      });
+
     this.effectService.list()
       .pipe(takeUntil(this.unsubsribe))
       .subscribe((items: Effect[]) => this.dataSource.data = items);

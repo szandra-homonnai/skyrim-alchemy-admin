@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Effect } from '@app/interfaces/effect.interface';
@@ -22,12 +23,21 @@ export class IngredientListComponent implements OnDestroy, AfterViewInit {
 
   public editedIngredient: IngredientDocument;
 
+  public searchControl: FormControl<string>;
+
   @ViewChild(MatSort, { static: true }) public sort: MatSort;
 
   constructor(
     private ingredientService: IngredientService,
     private effectService: EffectService
   ) {
+    this.searchControl = new FormControl('');
+
+    this.searchControl.valueChanges
+      .pipe(takeUntil(this.unsubsribe))
+      .subscribe((value: string) => {
+        this.dataSource.filter = value.trim().toLowerCase();
+      });
 
     this.ingredientService.list()
       .pipe(takeUntil(this.unsubsribe))
