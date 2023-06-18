@@ -46,7 +46,7 @@ export class EffectFormComponent implements OnDestroy {
     });
 
     this.schools = ['Restoration', 'Destruction', 'Alteration', 'Illusion'];
-    this.types = ['Defensive', 'Offensive', 'Restorative'];
+    this.types = ['Defensive', 'Offensive', 'Restorative', 'Other'];
   }
 
   private loadDataIntoForm(): void {
