@@ -11,8 +11,8 @@
     "lint": "ng lint",
     "prepare": "husky install",
     "build:ci": "npm run prepare-environment && ng build --configuration production",
-    "predeploy:ci": "firebase use --token $FIREBASE_TOKEN",
-    "deploy:ci": "firebase deploy --non-interactive --token $FIREBASE_TOKEN"
+    "predeploy:ci": "npx firebase use --token $FIREBASE_TOKEN",
+    "deploy:ci": "npx firebase deploy --non-interactive --token $FIREBASE_TOKEN"
   },
   "private": true,
   "dependencies": {
@@ -48,13 +48,14 @@
     "@typescript-eslint/parser": "^5.48.2",
     "dotenv": "^16.0.3",
     "eslint": "^8.33.0",
+    "firebase-tools": "^11.30.0",
+    "husky": "^8.0.0",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "typescript": "~4.9.4",
-    "husky": "^8.0.0"
+    "typescript": "~4.9.4"
   }
 }
