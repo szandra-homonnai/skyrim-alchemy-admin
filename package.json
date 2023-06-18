@@ -9,7 +9,10 @@
     "prepare-environment": "node prepare-environment.js",
     "test": "ng test",
     "lint": "ng lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "build:ci": "npm run prepare-environment && ng build --configuration production",
+    "predeploy:ci": "firebase use --token $FIREBASE_TOKEN",
+    "deploy:ci": "firebase deploy --non-interactive --token $FIREBASE_TOKEN"
   },
   "private": true,
   "dependencies": {
