@@ -61,8 +61,8 @@ export class IngredientListComponent implements OnDestroy, AfterViewInit {
         case 'effect2':
         case 'effect3':
         case 'effect4': {
-          const effectId: string = data[column].id;
-          return this.effects ? this.effects[effectId].name : effectId;
+          const effectId: string = data[column]?.id || null;
+          return effectId && this.effects && this.effects[effectId] ? this.effects[effectId].name : effectId;
         }
         case 'name':
           return data[column];
