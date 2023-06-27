@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
+import { Router } from '@angular/router';
 import { AuthService } from '@app/auth/services/auth.service';
 
 @Component({
@@ -8,11 +9,12 @@ import { AuthService } from '@app/auth/services/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public isLoggedIn: boolean;
+  public isLoggedIn: boolean = null;
 
   constructor(
     private authService: AuthService,
     private iconRegistry: MatIconRegistry,
+    private router: Router
   ) {
     this.iconRegistry.setDefaultFontSetClass('material-symbols-outlined');
 
@@ -22,6 +24,6 @@ export class AppComponent {
 
   public onClickLogout(): void {
     this.authService.signOut()
-      .then(() => location.reload());
+      .then(() => this.router.navigateByUrl('/auth/login'));
   }
 }
