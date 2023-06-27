@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { EffectSchoolEnum } from '@app/enums/effect-school.enum';
+import { EffectTypeEnum } from '@app/enums/effect-type.enum';
 import { Effect } from '@app/interfaces/effect.interface';
 import { EffectService } from '@app/services/effect.service';
 import { Subject } from 'rxjs';
@@ -45,8 +47,8 @@ export class EffectFormComponent implements OnDestroy {
       type: new FormControl(null, Validators.required)
     });
 
-    this.schools = ['Restoration', 'Destruction', 'Alteration', 'Illusion'];
-    this.types = ['Defensive', 'Offensive', 'Restorative', 'Other'];
+    this.schools = Object.keys(EffectSchoolEnum);
+    this.types = Object.keys(EffectTypeEnum);
   }
 
   private loadDataIntoForm(): void {
