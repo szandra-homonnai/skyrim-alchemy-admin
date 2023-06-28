@@ -71,14 +71,23 @@
             "variableDeclarationIgnoreFunction": false
           }
         ],
+        "comma-dangle": "error",
         "eqeqeq": "error",
+        "max-len": [
+          "error",
+          {
+            "ignorePattern": "^import |^export (.*?)",
+            "code": 140
+          }
+        ],
         "quotes": [
           "error",
           "single",
           {
             "allowTemplateLiterals": true
           }
-        ]
+        ],
+        "no-multiple-empty-lines": "error"
       }
     },
     {

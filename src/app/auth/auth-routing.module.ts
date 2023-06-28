@@ -12,7 +12,8 @@ const routes: Routes = [
     children: [
       { path: 'login', component: LoginComponent }
     ]
-  },];
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

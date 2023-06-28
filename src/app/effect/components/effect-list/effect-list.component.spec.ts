@@ -43,7 +43,7 @@ describe('EffectListComponent', () => {
       ],
       providers: [
         { provide: EffectService, useValue: jasmine.createSpyObj('EffectService', ['list']) },
-        { provide: IngredientService, useValue: jasmine.createSpyObj('IngredientService', ['getNameMapByEffectIds']) },
+        { provide: IngredientService, useValue: jasmine.createSpyObj('IngredientService', ['getNameMapByEffectIds']) }
       ]
     })
       .compileComponents();
@@ -76,7 +76,6 @@ describe('EffectListComponent', () => {
       expect(component.dataSource.filter).toEqual(searchText);
     });
   });
-
 
   describe('#ngAfterViewInit', () => {
     it('should set sorting attributes', () => {
