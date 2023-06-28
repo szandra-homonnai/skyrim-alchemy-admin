@@ -64,12 +64,14 @@ export class IngredientFormComponent implements OnDestroy {
   }
 
   private loadDataIntoForm(): void {
-    this.form.get('name').setValue(this.editedIngredient.name);
-    this.form.get('effect1').setValue(this.editedIngredient.effect1.id);
-    this.form.get('effect2').setValue(this.editedIngredient.effect2.id);
-    this.form.get('effect3').setValue(this.editedIngredient.effect3.id);
-    this.form.get('effect4').setValue(this.editedIngredient.effect4.id);
-    this.form.get('game').setValue(this.editedIngredient.game.id);
+    this.form.setValue({
+      name: this.editedIngredient.name,
+      effect1: this.editedIngredient.effect1.id,
+      effect2: this.editedIngredient.effect2.id,
+      effect3: this.editedIngredient.effect3.id,
+      effect4: this.editedIngredient.effect4.id,
+      game: this.editedIngredient.game.id
+    });
   }
 
   private onSaveSuccess(): void {

@@ -14,15 +14,15 @@ export const mockEffect: Effect = {
   id: 'xyz987',
   name: 'Effect',
   school: EffectSchoolEnum.Alteration,
-  type: EffectTypeEnum.Defensive,
+  type: EffectTypeEnum.Defensive
 };
 
 export const mockIngredientDocument: IngredientDocument = {
   id: 'abc123',
   name: 'Ingredient',
   effect1: { id: mockEffect.id } as DocumentReference,
-  effect2: null,
-  effect3: null,
-  effect4: null,
+  effect2: { id: 'abcd' } as DocumentReference,
+  effect3: { id: 'efgh' } as DocumentReference,
+  effect4: { id: 'ijkl' } as DocumentReference,
   game: { id: mockGame.id } as DocumentReference
 };

@@ -52,9 +52,11 @@ export class EffectFormComponent implements OnDestroy {
   }
 
   private loadDataIntoForm(): void {
-    this.form.get('name').setValue(this.editedEffect.name);
-    this.form.get('school').setValue(this.editedEffect.school);
-    this.form.get('type').setValue(this.editedEffect.type);
+    this.form.setValue({
+      name: this.editedEffect.name,
+      school: this.editedEffect.school,
+      type: this.editedEffect.type
+    });
   }
 
   private onSaveSuccess(): void {

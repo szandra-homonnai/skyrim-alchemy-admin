@@ -38,7 +38,7 @@ describe('IngredientListComponent', () => {
       ],
       providers: [
         { provide: IngredientService, useValue: jasmine.createSpyObj('IngredientService', ['list']) },
-        { provide: EffectService, useValue: jasmine.createSpyObj('EffectService', ['list']) },
+        { provide: EffectService, useValue: jasmine.createSpyObj('EffectService', ['list']) }
       ]
     })
       .compileComponents();
@@ -86,9 +86,9 @@ describe('IngredientListComponent', () => {
         component.ngAfterViewInit();
 
         expect(component.dataSource.sortingDataAccessor(mockIngredientDocument, 'effect1')).toEqual(mockEffect.name);
-        expect(component.dataSource.sortingDataAccessor(mockIngredientDocument, 'effect2')).toBeNull();
-        expect(component.dataSource.sortingDataAccessor(mockIngredientDocument, 'effect3')).toBeNull();
-        expect(component.dataSource.sortingDataAccessor(mockIngredientDocument, 'effect4')).toBeNull();
+        expect(component.dataSource.sortingDataAccessor(mockIngredientDocument, 'effect2')).toEqual(mockIngredientDocument.effect2.id);
+        expect(component.dataSource.sortingDataAccessor(mockIngredientDocument, 'effect3')).toEqual(mockIngredientDocument.effect3.id);
+        expect(component.dataSource.sortingDataAccessor(mockIngredientDocument, 'effect4')).toEqual(mockIngredientDocument.effect4.id);
         expect(component.dataSource.sortingDataAccessor(mockIngredientDocument, 'name')).toEqual(mockIngredientDocument.name);
         expect(component.dataSource.sortingDataAccessor(mockIngredientDocument, 'somehting')).toBeNull();
       });
