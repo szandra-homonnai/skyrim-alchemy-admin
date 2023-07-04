@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CollectionReference, DocumentReference, Firestore, addDoc, collection, collectionData, doc, orderBy, query, updateDoc } from '@angular/fire/firestore';
+import { CollectionReference, DocumentReference, Firestore, addDoc, collection, collectionData, deleteDoc, doc, orderBy, query, updateDoc } from '@angular/fire/firestore';
 import { Ingredient, IngredientDocument } from '@app/interfaces/ingredient.interface';
 import { EffectService } from '@app/services/effect.service';
 import { GameService } from '@app/services/game.service';
@@ -79,5 +79,10 @@ export class IngredientService {
       effect4: this.effectService.getDocumentById(ingredient.effect4),
       game: this.gameService.getDocumentById(ingredient.game)
     });
+  }
+
+  public delete(id: string): Promise<void> {
+    const reference: DocumentReference<IngredientDocument> = this.getDocumentById(id);
+    return deleteDoc(reference);
   }
 }

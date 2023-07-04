@@ -1,13 +1,17 @@
 import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Effect } from '@app/interfaces/effect.interface';
 import { IngredientDocument } from '@app/interfaces/ingredient.interface';
 import { EffectService } from '@app/services/effect.service';
 import { IngredientService } from '@app/services/ingredient.service';
+import { ConfirmDialogData } from '@app/shared/components/confirm-dialog/confirm-dialog-data.interface';
+import { ConfirmDialogComponent } from '@app/shared/components/confirm-dialog/confirm-dialog.component';
 import { scrollToTop } from '@app/style/style-helper';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-ingredient-list',
@@ -28,6 +32,8 @@ export class IngredientListComponent implements OnDestroy, AfterViewInit {
   @ViewChild(MatSort, { static: true }) public sort: MatSort;
 
   constructor(
+    private matSnackBar: MatSnackBar,
+    private matDialog: MatDialog,
     private ingredientService: IngredientService,
     private effectService: EffectService
   ) {
@@ -85,5 +91,28 @@ export class IngredientListComponent implements OnDestroy, AfterViewInit {
   public onClickEdit(ingredient: IngredientDocument): void {
     this.editedIngredient = ingredient;
     scrollToTop();
+  }
+
+  public onClickDelete(ingredient: IngredientDocument): void {
+    const data: ConfirmDialogData = {
+      title: 'Confirm',
+      message: `Are you sure you want to delete this ingredient: ${ingredient.name}?`
+    };
+
+    const dialogRef: MatDialogRef<ConfirmDialogComponent, boolean> = this.matDialog.open(ConfirmDialogComponent, {
+      data: data
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        take(1)
+      )
+      .subscribe((confirmed: boolean) => {
+        if (confirmed) {
+          this.ingredientService.delete(ingredient.id)
+            .then(() => this.matSnackBar.open('Ingredient was successfully deleted!'))
+            .catch(() => this.matSnackBar.open(`Ingredient couldn't be deleted!`));
+        }
+      });
   }
 }
