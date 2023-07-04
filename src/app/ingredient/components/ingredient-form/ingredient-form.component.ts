@@ -75,12 +75,12 @@ export class IngredientFormComponent implements OnDestroy {
   }
 
   private onSaveSuccess(): void {
-    this.matSnackBar.open('Ingredient was successfully saved!');
+    this.matSnackBar.open('Ingredient was successfully saved!', null, { panelClass: ['my-snack-bar-bg', 'bg-primary'] });
     this.clearForm();
   }
 
   private onSaveFail(): void {
-    this.matSnackBar.open('Ingredient saving failed!');
+    this.matSnackBar.open('Ingredient saving failed!', null, { panelClass: ['my-snack-bar-bg', 'bg-danger'] });
   }
 
   public ngOnDestroy(): void {

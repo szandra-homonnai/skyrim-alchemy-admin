@@ -3,6 +3,7 @@
 $primary: #02CD98;
 $secondary: #041952;
 $body-color: rgba($secondary, 0.87);
+$red: mat.get-color-from-palette(mat.$red-palette, 400);
 
 $primary-palette: (
   50: #dff7ed,

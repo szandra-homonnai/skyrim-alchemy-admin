@@ -110,8 +110,10 @@ export class IngredientListComponent implements OnDestroy, AfterViewInit {
       .subscribe((confirmed: boolean) => {
         if (confirmed) {
           this.ingredientService.delete(ingredient.id)
-            .then(() => this.matSnackBar.open('Ingredient was successfully deleted!'))
-            .catch(() => this.matSnackBar.open(`Ingredient couldn't be deleted!`));
+            .then(() => this.matSnackBar.open('Ingredient was successfully deleted!', null, {
+              panelClass: ['my-snack-bar-bg', 'bg-primary']
+            }))
+            .catch(() => this.matSnackBar.open(`Ingredient couldn't be deleted!`, null, { panelClass: ['my-snack-bar-bg', 'bg-danger'] }));
         }
       });
   }

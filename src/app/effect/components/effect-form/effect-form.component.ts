@@ -60,12 +60,12 @@ export class EffectFormComponent implements OnDestroy {
   }
 
   private onSaveSuccess(): void {
-    this.matSnackBar.open('Effect was successfully saved!');
+    this.matSnackBar.open('Effect was successfully saved!', null, { panelClass: ['my-snack-bar-bg', 'bg-primary'] });
     this.clearForm();
   }
 
   private onSaveFail(): void {
-    this.matSnackBar.open('Effect saving failed!');
+    this.matSnackBar.open('Effect saving failed!', null, { panelClass: ['my-snack-bar-bg', 'bg-danger'] });
   }
 
   public ngOnDestroy(): void {

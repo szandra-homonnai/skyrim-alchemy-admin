@@ -33,7 +33,7 @@ export class LoginComponent {
           this.router.navigateByUrl('/');
         })
         .catch(() => {
-          this.matSnackBar.open(`You could not login!`);
+          this.matSnackBar.open(`You could not login!`, null, { panelClass: ['my-snack-bar-bg', 'bg-danger'] });
         });
     }
   }

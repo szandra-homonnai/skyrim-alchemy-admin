@@ -69,6 +69,12 @@ mat-chip.mat-mdc-chip .mat-mdc-chip-action-label {
   color: $primary !important;
 }
 
+.my-snack-bar-bg {
+  &.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+    background-color: transparent;
+  }
+}
+
 // .mat-mdc-text-field-wrapper.mdc-text-field {
 //   border-radius: 4px;
 // }
