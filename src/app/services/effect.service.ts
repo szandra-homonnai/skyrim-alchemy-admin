@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CollectionReference, DocumentReference, Firestore, addDoc, collection, collectionData, doc, orderBy, query, updateDoc } from '@angular/fire/firestore';
+import { CollectionReference, DocumentReference, Firestore, addDoc, collection, collectionData, deleteDoc, doc, orderBy, query, updateDoc } from '@angular/fire/firestore';
 import { Effect } from '@app/interfaces/effect.interface';
 import { Observable } from 'rxjs';
 
@@ -30,5 +30,10 @@ export class EffectService {
   public update(id: string, effect: Effect): Promise<void> {
     const reference: DocumentReference<Effect> = this.getDocumentById(id);
     return updateDoc(reference, effect);
+  }
+
+  public delete(id: string): Promise<void> {
+    const reference: DocumentReference<Effect> = this.getDocumentById(id);
+    return deleteDoc(reference);
   }
 }

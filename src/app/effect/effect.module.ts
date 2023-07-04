@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -12,6 +13,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { EffectListComponent } from '@app/effect/components/effect-list/effect-list.component';
 import { EffectRoutingModule } from '@app/effect/effect-routing.module';
+import { ConfirmDialogComponent } from '@app/shared/components/confirm-dialog/confirm-dialog.component';
 import { EffectFormComponent } from './components/effect-form/effect-form.component';
 
 @NgModule({
@@ -31,7 +33,9 @@ import { EffectFormComponent } from './components/effect-form/effect-form.compon
     MatSortModule,
     MatButtonModule,
     MatIconModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDialogModule,
+    ConfirmDialogComponent
   ]
 })
 export class EffectModule { }
