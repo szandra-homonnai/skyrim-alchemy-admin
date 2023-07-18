@@ -5,12 +5,15 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { listEffects } from '@app/effect/state/effect.actions';
+import { selectEffectsAreLoaded, selectEffectsList } from '@app/effect/state/effect.selectors';
 import { Effect } from '@app/interfaces/effect.interface';
 import { EffectService } from '@app/services/effect.service';
 import { IngredientService } from '@app/services/ingredient.service';
 import { ConfirmDialogData } from '@app/shared/components/confirm-dialog/confirm-dialog-data.interface';
 import { ConfirmDialogComponent } from '@app/shared/components/confirm-dialog/confirm-dialog.component';
 import { scrollToTop } from '@app/style/style-helper';
+import { Store } from '@ngrx/store';
 import { Subject, take, takeUntil } from 'rxjs';
 
 @Component({
@@ -43,7 +46,8 @@ export class EffectListComponent implements AfterViewInit, OnDestroy {
     private matSnackBar: MatSnackBar,
     private matDialog: MatDialog,
     private effectService: EffectService,
-    private ingredientService: IngredientService
+    private ingredientService: IngredientService,
+    private store: Store
   ) {
     this.searchControl = new FormControl('');
 
@@ -53,13 +57,23 @@ export class EffectListComponent implements AfterViewInit, OnDestroy {
         this.dataSource.filter = value.trim().toLowerCase();
       });
 
-    this.effectService.list()
-      .pipe(takeUntil(this.unsubsribe))
-      .subscribe((items: Effect[]) => this.dataSource.data = items);
-
     this.ingredientService.getNameMapByEffectIds()
       .pipe(takeUntil(this.unsubsribe))
       .subscribe((items: Map<string, string[]>) => this.ingredients = items);
+
+    this.store.select(selectEffectsAreLoaded)
+      .pipe(takeUntil(this.unsubsribe))
+      .subscribe((loaded: boolean) => {
+        if (!loaded) {
+          this.store.dispatch(listEffects());
+        }
+      });
+
+    this.store.select(selectEffectsList)
+      .pipe(takeUntil(this.unsubsribe))
+      .subscribe((effects: Effect[]) => {
+        this.dataSource.data = effects;
+      });
   }
 
   public ngAfterViewInit(): void {

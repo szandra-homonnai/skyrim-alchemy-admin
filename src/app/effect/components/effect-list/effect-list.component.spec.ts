@@ -11,11 +11,16 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectListComponent } from '@app/effect/components/effect-list/effect-list.component';
+import { listEffects } from '@app/effect/state/effect.actions';
+import { EffectState } from '@app/effect/state/effect.reducer';
+import { selectEffectsAreLoaded, selectEffectsList } from '@app/effect/state/effect.selectors';
 import { Effect } from '@app/interfaces/effect.interface';
 import { EffectService } from '@app/services/effect.service';
 import { IngredientService } from '@app/services/ingredient.service';
 import { MockComponent } from '@app/testing/component.mock';
 import { mockEffect, mockIngredientDocument } from '@app/testing/data.mock';
+import { Action } from '@ngrx/store';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 
 describe('EffectListComponent', () => {
@@ -25,6 +30,9 @@ describe('EffectListComponent', () => {
   let matDialogSpy: jasmine.SpyObj<MatDialog>;
   let ingredientServiceSpy: jasmine.SpyObj<IngredientService>;
   let effectServiceSpy: jasmine.SpyObj<EffectService>;
+  let store: MockStore;
+
+  const initialEffectState: EffectState = { effectsAreLoaded: true, effects: [mockEffect] };
 
   const mockIngredientMap: Map<string, string[]> = new Map();
   mockIngredientMap.set(mockEffect.id, [mockIngredientDocument.name]);
@@ -47,19 +55,21 @@ describe('EffectListComponent', () => {
         MatChipsModule
       ],
       providers: [
+        provideMockStore({ initialState: { effect: initialEffectState } }),
         { provide: MatSnackBar, useValue: jasmine.createSpyObj('MatSnackBar', ['open']) },
         { provide: MatDialog, useValue: jasmine.createSpyObj('MatDialog', ['open']) },
-        { provide: EffectService, useValue: jasmine.createSpyObj('EffectService', ['list', 'delete']) },
+        { provide: EffectService, useValue: jasmine.createSpyObj('EffectService', ['delete']) },
         { provide: IngredientService, useValue: jasmine.createSpyObj('IngredientService', ['getNameMapByEffectIds']) }
       ]
     })
       .compileComponents();
 
+    store = TestBed.inject(MockStore);
+
     matSnackBarSpy = TestBed.inject(MatSnackBar) as jasmine.SpyObj<MatSnackBar>;
     matDialogSpy = TestBed.inject(MatDialog) as jasmine.SpyObj<MatDialog>;
 
     effectServiceSpy = TestBed.inject(EffectService) as jasmine.SpyObj<EffectService>;
-    effectServiceSpy.list.and.returnValue(of([mockEffect]));
 
     ingredientServiceSpy = TestBed.inject(IngredientService) as jasmine.SpyObj<IngredientService>;
     ingredientServiceSpy.getNameMapByEffectIds.and.returnValue(of(mockIngredientMap));
@@ -69,13 +79,37 @@ describe('EffectListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  afterEach(() => {
+    store.resetSelectors();
+  });
+
+  it('should create', (done: DoneFn) => {
     expect(component).toBeTruthy();
     expect(component.searchControl).toBeTruthy();
-    expect(effectServiceSpy.list).toHaveBeenCalledTimes(1);
     expect(component.dataSource.data).toEqual([mockEffect]);
     expect(ingredientServiceSpy.getNameMapByEffectIds).toHaveBeenCalledTimes(1);
     expect(component.ingredients).toEqual(mockIngredientMap);
+
+    store.scannedActions$.subscribe((action: Action) => {
+      expect(action).not.toEqual(listEffects());
+      done();
+    })
+  });
+
+  it('should dispatch store action when effects are not loaded', (done: DoneFn) => {
+    store.overrideSelector(selectEffectsAreLoaded, false);
+    store.refreshState();
+
+    store.scannedActions$.subscribe((action: Action) => {
+      expect(action).toEqual(listEffects());
+      done();
+    })
+  });
+
+  it('should set datasource when store selector changes', () => {
+    store.overrideSelector(selectEffectsList, []);
+    store.refreshState();
+    expect(component.dataSource.data).toEqual([]);
   });
 
   describe('#searchControl', () => {

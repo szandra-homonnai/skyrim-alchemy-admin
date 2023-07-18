@@ -11,10 +11,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { EffectFormComponent } from '@app/effect/components/effect-form/effect-form.component';
 import { EffectListComponent } from '@app/effect/components/effect-list/effect-list.component';
 import { EffectRoutingModule } from '@app/effect/effect-routing.module';
+import { EffectEffects } from '@app/effect/state/effect.effects';
+import { effectFeature } from '@app/effect/state/effect.reducer';
 import { ConfirmDialogComponent } from '@app/shared/components/confirm-dialog/confirm-dialog.component';
-import { EffectFormComponent } from './components/effect-form/effect-form.component';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,9 @@ import { EffectFormComponent } from './components/effect-form/effect-form.compon
     MatIconModule,
     MatChipsModule,
     MatDialogModule,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    StoreModule.forFeature(effectFeature),
+    EffectsModule.forFeature([EffectEffects])
   ]
 })
 export class EffectModule { }

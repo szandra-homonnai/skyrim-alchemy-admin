@@ -11,7 +11,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { APP_INITIALIZER_PROVIDER } from '@app/app-initalizer.provider';
 import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
+import { metaReducers, reducers } from '@app/state';
 import { environment } from '@environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,9 @@ import { environment } from '@environments/environment';
     MatIconModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    StoreModule.forRoot(reducers, { metaReducers }),
+    EffectsModule.forRoot([])
   ],
   providers: [
     APP_INITIALIZER_PROVIDER,
