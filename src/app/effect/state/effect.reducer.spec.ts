@@ -34,7 +34,7 @@ describe('Effect Reducer', () => {
       const action = EffectActions.listEffectsSuccess({ effects: [effect2, effect3, effect1, effect4] });
       const result: EffectState = effectReducer(initialEffectState, action);
 
-      expect(result).toEqual({ ...initialEffectState, effectsAreLoaded: true, effects: [effect1, effect2, effect3, effect4] });
+      expect(result).toEqual({ ...initialEffectState, effectsAreLoaded: true, effects: [effect2, effect3, effect1, effect4] });
     });
   });
 

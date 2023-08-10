@@ -16,7 +16,7 @@
       matSortActive="name" matSortDirection="asc">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let element" class="fw-semibold"> {{ element.name }} </td>
+        <td mat-cell *matCellDef="let element" [id]="element.id" class="fw-semibold"> {{ element.name }} </td>
       </ng-container>
 
       <ng-container matColumnDef="school">
@@ -55,7 +55,8 @@
           <div class="overflow-hidden" [@expandDetails]="element === expandedEffect ? 'expanded' : 'collapsed'">
             <div class="py-3">
               <mat-chip-listbox *ngIf="ingredients && ingredients.has(element.id)">
-                <mat-chip *ngFor="let ingredient of ingredients.get(element.id)">
+                <mat-chip *ngFor="let ingredient of ingredients.get(element.id)" class="cursor-pointer"
+                  (click)="onClickIngredient(ingredient)">
                   {{ ingredient }}
                 </mat-chip>
               </mat-chip-listbox>
@@ -66,7 +67,8 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true">
       </tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.edited-row]="row === editedEffect">
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        [class.edited-row]="row === editedEffect || row.id === linkedEffectId">
       </tr>
       <tr mat-row *matRowDef="let row; columns: ['effectDetails']" class="effect-details-row"
         [class.closed-row]="row !== expandedEffect">

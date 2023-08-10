@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Effect } from '@app/interfaces/effect.interface';
 import { IngredientDocument } from '@app/interfaces/ingredient.interface';
 import { EffectService } from '@app/services/effect.service';
@@ -29,15 +30,19 @@ export class IngredientListComponent implements OnDestroy, AfterViewInit {
 
   public searchControl: FormControl<string>;
 
+  public linkedIngredientName: string;
+
   @ViewChild(MatSort, { static: true }) public sort: MatSort;
 
   constructor(
     private matSnackBar: MatSnackBar,
     private matDialog: MatDialog,
+    private router: Router,
     private ingredientService: IngredientService,
     private effectService: EffectService
   ) {
     this.searchControl = new FormControl('');
+    this.linkedIngredientName = location.hash.replace('#', '');
 
     this.searchControl.valueChanges
       .pipe(takeUntil(this.unsubsribe))
@@ -76,6 +81,11 @@ export class IngredientListComponent implements OnDestroy, AfterViewInit {
           return null;
       }
     };
+
+    setTimeout(() => {
+      const element: HTMLElement = this.linkedIngredientName ? document.getElementById(this.linkedIngredientName) : null;
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }, 500);
   }
 
   public ngOnDestroy(): void {
@@ -116,5 +126,9 @@ export class IngredientListComponent implements OnDestroy, AfterViewInit {
             .catch(() => this.matSnackBar.open(`Ingredient couldn't be deleted!`, null, { panelClass: ['my-snack-bar-bg', 'bg-danger'] }));
         }
       });
+  }
+
+  public onClickEffect(effectId: string): void {
+    this.router.navigateByUrl(`/effects#${effectId}`);
   }
 }

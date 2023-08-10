@@ -5,6 +5,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { listEffects } from '@app/effect/state/effect.actions';
 import { selectEffectsAreLoaded, selectEffectsList } from '@app/effect/state/effect.selectors';
 import { Effect } from '@app/interfaces/effect.interface';
@@ -40,16 +41,20 @@ export class EffectListComponent implements AfterViewInit, OnDestroy {
 
   public searchControl: FormControl<string>;
 
+  public linkedEffectId: string;
+
   @ViewChild(MatSort) public sort: MatSort;
 
   constructor(
     private matSnackBar: MatSnackBar,
     private matDialog: MatDialog,
+    private router: Router,
     private effectService: EffectService,
     private ingredientService: IngredientService,
     private store: Store
   ) {
     this.searchControl = new FormControl('');
+    this.linkedEffectId = location.hash.replace('#', '');
 
     this.searchControl.valueChanges
       .pipe(takeUntil(this.unsubsribe))
@@ -78,6 +83,11 @@ export class EffectListComponent implements AfterViewInit, OnDestroy {
 
   public ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
+
+    setTimeout(() => {
+      const element: HTMLElement = this.linkedEffectId ? document.getElementById(this.linkedEffectId) : null;
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }, 500);
   }
 
   public ngOnDestroy(): void {
@@ -125,5 +135,9 @@ export class EffectListComponent implements AfterViewInit, OnDestroy {
             .catch(() => this.matSnackBar.open(`Ingredient couldn't be deleted!`, null, { panelClass: ['my-snack-bar-bg', 'bg-danger'] }));
         }
       });
+  }
+
+  public onClickIngredient(ingredientName: string): void {
+    this.router.navigateByUrl(`/ingredients#${ingredientName.replaceAll(' ', '-')}`);
   }
 }

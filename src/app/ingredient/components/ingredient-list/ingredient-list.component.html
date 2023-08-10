@@ -16,33 +16,40 @@
       matSortDirection="asc">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let element" class="text-truncate fw-semibold"> {{ element.name }} </td>
+        <td mat-cell *matCellDef="let element" [id]="element?.name.replaceAll(' ', '-')"
+          class="text-truncate fw-semibold">
+          {{ element.name }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="effect1">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> 1st effect </th>
-        <td mat-cell *matCellDef="let element" class="text-truncate">
+        <td mat-cell *matCellDef="let element" class="text-truncate cursor-pointer"
+          (click)="onClickEffect(element?.effect1?.id)">
           {{ element.effect1 && effects && effects[element.effect1.id] ? effects[element.effect1.id].name : '' }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="effect2">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> 2nd effect </th>
-        <td mat-cell *matCellDef="let element" class="text-truncate">
+        <td mat-cell *matCellDef="let element" class="text-truncate cursor-pointer"
+          (click)="onClickEffect(element?.effect2?.id)">
           {{ element.effect2 && effects && effects[element.effect2.id] ? effects[element.effect2.id].name : '' }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="effect3">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> 3rd effect </th>
-        <td mat-cell *matCellDef="let element" class="text-truncate">
+        <td mat-cell *matCellDef="let element" class="text-truncate cursor-pointer"
+          (click)="onClickEffect(element?.effect3?.id)">
           {{ element.effect3 && effects && effects[element.effect3.id] ? effects[element.effect3.id].name : '' }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="effect4">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> 4th effect </th>
-        <td mat-cell *matCellDef="let element" class="text-truncate">
+        <td mat-cell *matCellDef="let element" class="text-truncate cursor-pointer"
+          (click)="onClickEffect(element?.effect4?.id)">
           {{ element.effect4 && effects && effects[element.effect4.id] ? effects[element.effect4.id].name : '' }}
         </td>
       </ng-container>
@@ -64,7 +71,8 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.edited-row]="row === editedIngredient">
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        [class.edited-row]="row === editedIngredient ||  row.name === linkedIngredientName?.replaceAll('-', ' ')">
       </tr>
     </table>
   </div>
