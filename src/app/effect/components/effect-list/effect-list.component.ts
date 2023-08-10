@@ -87,6 +87,10 @@ export class EffectListComponent implements AfterViewInit, OnDestroy {
     setTimeout(() => {
       const element: HTMLElement = this.linkedEffectId ? document.getElementById(this.linkedEffectId) : null;
       element?.scrollIntoView({ behavior: 'smooth' });
+
+      if (this.linkedEffectId) {
+        this.expandedEffect = this.dataSource.data.find((effect: Effect) => effect.id === this.linkedEffectId);
+      }
     }, 500);
   }
 
