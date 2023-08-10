@@ -17,7 +17,7 @@ export class EffectEffects {
       switchMap(() => this.effectsService.list()
         .pipe(
           map((effects: Effect[]) => EffectActions.listEffectsSuccess({ effects: effects })),
-          catchError((error: unknown) => of(EffectActions.listEffectsFailure({ error: error })))
+          catchError((error) => of(EffectActions.listEffectsFailure({ error: error })))
         )
       )
     );

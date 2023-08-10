@@ -24,7 +24,7 @@ export class LoginComponent {
     });
   }
 
-  public onSubmit() {
+  public onSubmit(): void {
     if (this.form.valid) {
       const formValue: Partial<LoginData> = this.form.value;
 

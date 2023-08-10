@@ -61,7 +61,7 @@ export class IngredientListComponent implements OnDestroy, AfterViewInit {
   public ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
 
-    this.dataSource.sortingDataAccessor = (data: IngredientDocument, column: string) => {
+    this.dataSource.sortingDataAccessor = (data: IngredientDocument, column: string): string => {
       switch (column) {
         case 'effect1':
         case 'effect2':
