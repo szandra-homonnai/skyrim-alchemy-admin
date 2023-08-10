@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CollectionReference, DocumentReference, Firestore, addDoc, collection, collectionData, deleteDoc, doc, orderBy, query, updateDoc } from '@angular/fire/firestore';
 import { Effect } from '@app/interfaces/effect.interface';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,20 @@ export class EffectService {
   }
 
   public list(): Observable<Effect[]> {
-    return collectionData<Effect>(this.collection, { idField: 'id' });
+    return collectionData<Effect>(this.collection, { idField: 'id' })
+      .pipe(
+        map((items: Effect[]) => (items.sort((a: Effect, b: Effect) => {
+          if (a.name > b.name) {
+            return 1;
+          }
+
+          if (b.name > a.name) {
+            return -1;
+          }
+
+          return 0;
+        })))
+      );
   }
 
   public create(effect: Effect): Promise<DocumentReference> {

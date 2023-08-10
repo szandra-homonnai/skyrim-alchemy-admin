@@ -17,18 +17,6 @@ export const initialEffectState: EffectState = {
 export const effectReducer: ActionReducer<EffectState, Action> = createReducer(
   initialEffectState,
   on(EffectActions.listEffectsSuccess, (state: EffectState, { effects }: { effects: Effect[] }): EffectState => {
-    effects = effects.sort((a: Effect, b: Effect) => {
-      if (a.name > b.name) {
-        return 1;
-      }
-
-      if (b.name > a.name) {
-        return -1;
-      }
-
-      return 0;
-    });
-
     return {
       ...state,
       effectsAreLoaded: true,

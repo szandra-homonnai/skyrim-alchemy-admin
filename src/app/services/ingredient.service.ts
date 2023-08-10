@@ -3,7 +3,7 @@ import { CollectionReference, DocumentReference, Firestore, addDoc, collection, 
 import { Ingredient, IngredientDocument } from '@app/interfaces/ingredient.interface';
 import { EffectService } from '@app/services/effect.service';
 import { GameService } from '@app/services/game.service';
-import { Observable, of, switchMap } from 'rxjs';
+import { Observable, map, of, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,20 @@ export class IngredientService {
   }
 
   public list(): Observable<IngredientDocument[]> {
-    return collectionData<IngredientDocument>(this.collection, { idField: 'id' });
+    return collectionData<IngredientDocument>(this.collection, { idField: 'id' })
+      .pipe(
+        map((items: IngredientDocument[]) => (items.sort((a: IngredientDocument, b: IngredientDocument) => {
+          if (a.name > b.name) {
+            return 1;
+          }
+
+          if (b.name > a.name) {
+            return -1;
+          }
+
+          return 0;
+        })))
+      );
   }
 
   public getNameMapByEffectIds(): Observable<Map<string, string[]>> {
