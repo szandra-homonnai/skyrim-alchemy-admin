@@ -126,7 +126,7 @@ describe('IngredientFormComponent', () => {
 
     it('should only reset form when form directive is unavailable', () => {
       spyOn(component.form, 'reset');
-      component.formGroupDirective = null
+      component.formGroupDirective = null;
 
       component.resetForm();
 

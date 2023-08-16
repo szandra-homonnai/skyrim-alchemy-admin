@@ -93,7 +93,7 @@ describe('EffectListComponent', () => {
     store.scannedActions$.subscribe((action: Action) => {
       expect(action).not.toEqual(listEffects());
       done();
-    })
+    });
   });
 
   it('should dispatch store action when effects are not loaded', (done: DoneFn) => {
@@ -103,7 +103,7 @@ describe('EffectListComponent', () => {
     store.scannedActions$.subscribe((action: Action) => {
       expect(action).toEqual(listEffects());
       done();
-    })
+    });
   });
 
   it('should set datasource when store selector changes', () => {

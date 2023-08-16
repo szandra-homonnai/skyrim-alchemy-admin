@@ -21,14 +21,14 @@ export const effectReducer: ActionReducer<EffectState, Action> = createReducer(
       ...state,
       effectsAreLoaded: true,
       effects: effects
-    }
+    };
   }),
   on(EffectActions.listEffectsFailure, (state: EffectState): EffectState => {
     return {
       ...state,
       effectsAreLoaded: initialEffectState.effectsAreLoaded,
       effects: initialEffectState.effects
-    }
+    };
   })
 );
 

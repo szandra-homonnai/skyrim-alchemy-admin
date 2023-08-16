@@ -18,4 +18,4 @@ export const anonymousGuard: CanActivateFn = () => {
         return !isLoggedIn;
       })
     );
-}
+};

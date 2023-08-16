@@ -38,7 +38,7 @@ describe('EffectEffects', () => {
       effects.listEffects$.subscribe((action) => {
         expect(action).toEqual(EffectActions.listEffectsSuccess({ effects: [mockEffect] }));
         done();
-      })
+      });
     });
 
     it('should dispatch failure action when listing effects failer', (done: DoneFn) => {
@@ -51,7 +51,7 @@ describe('EffectEffects', () => {
       effects.listEffects$.subscribe((action) => {
         expect(action).toEqual(EffectActions.listEffectsFailure({ error: error }));
         done();
-      })
+      });
     });
   });
 });

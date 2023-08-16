@@ -82,6 +82,7 @@
             "code": 140
           }
         ],
+        "no-multiple-empty-lines": "error",
         "quotes": [
           "error",
           "single",
@@ -89,7 +90,10 @@
             "allowTemplateLiterals": true
           }
         ],
-        "no-multiple-empty-lines": "error"
+        "semi": [
+          "error",
+          "always"
+        ]
       }
     },
     {
