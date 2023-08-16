@@ -7,20 +7,22 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { EffectState } from '@app/effect/state/effect.reducer';
 import { IngredientFormComponent } from '@app/ingredient/components/ingredient-form/ingredient-form.component';
-import { EffectService } from '@app/services/effect.service';
 import { GameService } from '@app/services/game.service';
 import { IngredientService } from '@app/services/ingredient.service';
 import { mockEffect, mockGame, mockIngredientDocument } from '@app/testing/data.mock';
+import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 
 describe('IngredientFormComponent', () => {
   let component: IngredientFormComponent;
   let fixture: ComponentFixture<IngredientFormComponent>;
   let matSnackBarSpy: jasmine.SpyObj<MatSnackBar>;
-  let effectServiceSpy: jasmine.SpyObj<EffectService>;
   let gameServiceSpy: jasmine.SpyObj<GameService>;
   let ingredientServiceSpy: jasmine.SpyObj<IngredientService>;
+
+  const initialEffectState: EffectState = { effectsAreLoaded: true, effects: [mockEffect] };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -36,8 +38,8 @@ describe('IngredientFormComponent', () => {
         MatButtonModule
       ],
       providers: [
+        provideMockStore({ initialState: { effect: initialEffectState } }),
         { provide: MatSnackBar, useValue: jasmine.createSpyObj('MatSnackBar', ['open']) },
-        { provide: EffectService, useValue: jasmine.createSpyObj('EffectService', ['list']) },
         { provide: GameService, useValue: jasmine.createSpyObj('GameService', ['list']) },
         { provide: IngredientService, useValue: jasmine.createSpyObj('IngredientService', ['create', 'update']) }
       ]
@@ -45,8 +47,6 @@ describe('IngredientFormComponent', () => {
       .compileComponents();
 
     matSnackBarSpy = TestBed.inject(MatSnackBar) as jasmine.SpyObj<MatSnackBar>;
-    effectServiceSpy = TestBed.inject(EffectService) as jasmine.SpyObj<EffectService>;
-    effectServiceSpy.list.and.returnValue(of([mockEffect]));
 
     gameServiceSpy = TestBed.inject(GameService) as jasmine.SpyObj<GameService>;
     gameServiceSpy.list.and.returnValue(of([mockGame]));
@@ -61,7 +61,6 @@ describe('IngredientFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
     expect(component.form).toBeTruthy();
-    expect(effectServiceSpy.list).toHaveBeenCalled();
     expect(component.effects).toEqual([mockEffect]);
     expect(gameServiceSpy.list).toHaveBeenCalled();
     expect(component.games).toEqual([mockGame]);

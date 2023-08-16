@@ -5,13 +5,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { listEffects } from '@app/effect/state/effect.actions';
+import { selectEffectsAreLoaded, selectEffectsList } from '@app/effect/state/effect.selectors';
 import { Effect } from '@app/interfaces/effect.interface';
 import { IngredientDocument } from '@app/interfaces/ingredient.interface';
-import { EffectService } from '@app/services/effect.service';
 import { IngredientService } from '@app/services/ingredient.service';
 import { ConfirmDialogData } from '@app/shared/components/confirm-dialog/confirm-dialog-data.interface';
 import { ConfirmDialogComponent } from '@app/shared/components/confirm-dialog/confirm-dialog.component';
 import { scrollToTop } from '@app/style/style-helper';
+import { Store } from '@ngrx/store';
 import { Subject, take, takeUntil } from 'rxjs';
 
 @Component({
@@ -39,7 +41,7 @@ export class IngredientListComponent implements OnDestroy, AfterViewInit {
     private matDialog: MatDialog,
     private router: Router,
     private ingredientService: IngredientService,
-    private effectService: EffectService
+    private store: Store
   ) {
     this.searchControl = new FormControl('');
     this.linkedIngredientName = location.hash.replace('#', '');
@@ -54,11 +56,19 @@ export class IngredientListComponent implements OnDestroy, AfterViewInit {
       .pipe(takeUntil(this.unsubsribe))
       .subscribe((items: IngredientDocument[]) => this.dataSource.data = items);
 
-    this.effectService.list()
+    this.store.select(selectEffectsAreLoaded)
       .pipe(takeUntil(this.unsubsribe))
-      .subscribe((items: Effect[]) => {
-        for (const item of items) {
-          this.effects[item.id] = item;
+      .subscribe((loaded: boolean) => {
+        if (!loaded) {
+          this.store.dispatch(listEffects());
+        }
+      });
+
+    this.store.select(selectEffectsList)
+      .pipe(takeUntil(this.unsubsribe))
+      .subscribe((effects: Effect[]) => {
+        for (const effect of effects) {
+          this.effects[effect.id] = effect;
         }
       });
   }

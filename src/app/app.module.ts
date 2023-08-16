@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { APP_INITIALIZER_PROVIDER } from '@app/app-initalizer.provider';
 import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
+import { EffectEffects } from '@app/effect/state/effect.effects';
 import { metaReducers, reducers } from '@app/state';
 import { environment } from '@environments/environment';
 import { EffectsModule } from '@ngrx/effects';
@@ -31,7 +32,7 @@ import { StoreModule } from '@ngrx/store';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([EffectEffects])
   ],
   providers: [
     APP_INITIALIZER_PROVIDER,

@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { selectEffectsList } from '@app/effect/state/effect.selectors';
 import { Effect } from '@app/interfaces/effect.interface';
 import { Game } from '@app/interfaces/game.interface';
 import { Ingredient, IngredientDocument } from '@app/interfaces/ingredient.interface';
-import { EffectService } from '@app/services/effect.service';
 import { GameService } from '@app/services/game.service';
 import { IngredientService } from '@app/services/ingredient.service';
+import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -41,9 +42,9 @@ export class IngredientFormComponent implements OnDestroy {
 
   constructor(
     private matSnackBar: MatSnackBar,
-    private effectService: EffectService,
     private gameService: GameService,
-    private ingredientService: IngredientService
+    private ingredientService: IngredientService,
+    private store: Store
   ) {
     this.form = new FormGroup({
       name: new FormControl(null, Validators.required),
@@ -54,7 +55,7 @@ export class IngredientFormComponent implements OnDestroy {
       game: new FormControl(null, Validators.required)
     });
 
-    this.effectService.list()
+    this.store.select(selectEffectsList)
       .pipe(takeUntil(this.unsubsribe))
       .subscribe((items: Effect[]) => this.effects = items);
 

@@ -14,11 +14,7 @@ import { MatTableModule } from '@angular/material/table';
 import { EffectFormComponent } from '@app/effect/components/effect-form/effect-form.component';
 import { EffectListComponent } from '@app/effect/components/effect-list/effect-list.component';
 import { EffectRoutingModule } from '@app/effect/effect-routing.module';
-import { EffectEffects } from '@app/effect/state/effect.effects';
-import { effectFeature } from '@app/effect/state/effect.reducer';
 import { ConfirmDialogComponent } from '@app/shared/components/confirm-dialog/confirm-dialog.component';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -39,9 +35,7 @@ import { StoreModule } from '@ngrx/store';
     MatIconModule,
     MatChipsModule,
     MatDialogModule,
-    ConfirmDialogComponent,
-    StoreModule.forFeature(effectFeature),
-    EffectsModule.forFeature([EffectEffects])
+    ConfirmDialogComponent
   ]
 })
 export class EffectModule { }

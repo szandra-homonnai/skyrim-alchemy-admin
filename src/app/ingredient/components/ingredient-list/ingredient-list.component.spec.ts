@@ -9,11 +9,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { EffectState } from '@app/effect/state/effect.reducer';
 import { IngredientListComponent } from '@app/ingredient/components/ingredient-list/ingredient-list.component';
-import { EffectService } from '@app/services/effect.service';
 import { IngredientService } from '@app/services/ingredient.service';
 import { MockComponent } from '@app/testing/component.mock';
 import { mockEffect, mockIngredientDocument } from '@app/testing/data.mock';
+import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 
 describe('IngredientListComponent', () => {
@@ -22,7 +23,8 @@ describe('IngredientListComponent', () => {
   let matSnackBarSpy: jasmine.SpyObj<MatSnackBar>;
   let matDialogSpy: jasmine.SpyObj<MatDialog>;
   let ingredientServiceSpy: jasmine.SpyObj<IngredientService>;
-  let effectServiceSpy: jasmine.SpyObj<EffectService>;
+
+  const initialEffectState: EffectState = { effectsAreLoaded: true, effects: [mockEffect] };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -41,10 +43,10 @@ describe('IngredientListComponent', () => {
         MatIconModule
       ],
       providers: [
+        provideMockStore({ initialState: { effect: initialEffectState } }),
         { provide: MatSnackBar, useValue: jasmine.createSpyObj('MatSnackBar', ['open']) },
         { provide: MatDialog, useValue: jasmine.createSpyObj('MatDialog', ['open']) },
-        { provide: IngredientService, useValue: jasmine.createSpyObj('IngredientService', ['list', 'delete']) },
-        { provide: EffectService, useValue: jasmine.createSpyObj('EffectService', ['list']) }
+        { provide: IngredientService, useValue: jasmine.createSpyObj('IngredientService', ['list', 'delete']) }
       ]
     })
       .compileComponents();
@@ -54,9 +56,6 @@ describe('IngredientListComponent', () => {
 
     ingredientServiceSpy = TestBed.inject(IngredientService) as jasmine.SpyObj<IngredientService>;
     ingredientServiceSpy.list.and.returnValue(of([mockIngredientDocument]));
-
-    effectServiceSpy = TestBed.inject(EffectService) as jasmine.SpyObj<EffectService>;
-    effectServiceSpy.list.and.returnValue(of([mockEffect]));
 
     fixture = TestBed.createComponent(IngredientListComponent);
     component = fixture.componentInstance;
@@ -68,7 +67,6 @@ describe('IngredientListComponent', () => {
     expect(component.searchControl).toBeTruthy();
     expect(ingredientServiceSpy.list).toHaveBeenCalledTimes(1);
     expect(component.dataSource.data).toEqual([mockIngredientDocument]);
-    expect(effectServiceSpy.list).toHaveBeenCalledTimes(1);
     expect(component.effects).toEqual({ [mockEffect.id]: mockEffect });
   });
 
