@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,6 +12,8 @@ import { IngredientDocument } from '@app/interfaces/ingredient.interface';
 import { IngredientService } from '@app/services/ingredient.service';
 import { ConfirmDialogData } from '@app/shared/components/confirm-dialog/confirm-dialog-data.interface';
 import { ConfirmDialogComponent } from '@app/shared/components/confirm-dialog/confirm-dialog.component';
+import { listIngredients } from '@app/state/ingredient/ingredient.actions';
+import { selectIngredientsAreLoaded, selectIngredientsList } from '@app/state/ingredient/ingredient.selector';
 import { scrollToTop } from '@app/style/style-helper';
 import { Store } from '@ngrx/store';
 import { Subject, take, takeUntil } from 'rxjs';
@@ -41,7 +43,8 @@ export class IngredientListComponent implements OnDestroy, AfterViewInit {
     private matDialog: MatDialog,
     private router: Router,
     private ingredientService: IngredientService,
-    private store: Store
+    private store: Store,
+    private changeDetectorRef: ChangeDetectorRef
   ) {
     this.searchControl = new FormControl('');
     this.linkedIngredientName = location.hash.replace('#', '');
@@ -52,13 +55,32 @@ export class IngredientListComponent implements OnDestroy, AfterViewInit {
         this.dataSource.filter = value.trim().toLowerCase();
       });
 
-    this.ingredientService.list()
-      .pipe(takeUntil(this.unsubsribe))
-      .subscribe((items: IngredientDocument[]) => this.dataSource.data = items);
+    // this.ingredientService.list()
+    //   .pipe(takeUntil(this.unsubsribe))
+    //   .subscribe((items: IngredientDocument[]) => this.dataSource.data = items);
 
-    this.store.select(selectEffectsAreLoaded)
+    this.store.select(selectIngredientsAreLoaded)
       .pipe(takeUntil(this.unsubsribe))
       .subscribe((loaded: boolean) => {
+        console.log('selectIngredientsAreLoaded', loaded);
+        if (!loaded) {
+          this.store.dispatch(listIngredients());
+        }
+      });
+
+    this.store.select(selectIngredientsList)
+      .pipe(takeUntil(this.unsubsribe))
+      .subscribe((items: IngredientDocument[]) => {
+        console.log('selectIngredientsList', items.length);
+        this.dataSource.data = JSON.parse(JSON.stringify(items));
+      });
+
+    this.store.select(selectEffectsAreLoaded)
+      .pipe(
+        takeUntil(this.unsubsribe)
+      )
+      .subscribe((loaded: boolean) => {
+        console.log('selectEffectsAreLoaded', loaded);
         if (!loaded) {
           this.store.dispatch(listEffects());
         }
@@ -67,9 +89,14 @@ export class IngredientListComponent implements OnDestroy, AfterViewInit {
     this.store.select(selectEffectsList)
       .pipe(takeUntil(this.unsubsribe))
       .subscribe((effects: Effect[]) => {
+        console.log('selectEffectsList', effects.length);
+        const map: { [key: string]: Effect } = {};
+
         for (const effect of effects) {
-          this.effects[effect.id] = effect;
+          map[effect.id] = effect;
         }
+
+        this.effects = map;
       });
   }
 

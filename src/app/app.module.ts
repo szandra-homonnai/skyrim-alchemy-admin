@@ -13,6 +13,7 @@ import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
 import { EffectEffects } from '@app/effect/state/effect.effects';
 import { metaReducers, reducers } from '@app/state';
+import { IngredientEffects } from '@app/state/ingredient/ingredient.effects';
 import { environment } from '@environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -32,7 +33,7 @@ import { StoreModule } from '@ngrx/store';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([EffectEffects])
+    EffectsModule.forRoot(EffectEffects, IngredientEffects)
   ],
   providers: [
     APP_INITIALIZER_PROVIDER,

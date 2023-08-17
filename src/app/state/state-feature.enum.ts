@@ -1,3 +1,4 @@
 export enum StateFeatureEnum {
-  Effect = 'effect'
+  Effect = 'effect',
+  Ingredient = 'ingredient'
 }
