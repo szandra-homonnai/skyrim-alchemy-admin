@@ -1,3 +1,6 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
 @import "./style/variables.scss";
 
 .sky-background {
@@ -18,15 +21,22 @@
 }
 
 .logo-container {
-  height: 5rem;
-  width: 5rem;
-  border-radius: 5rem;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 3rem;
   border: 1px $primary solid;
-  padding: 0.75rem;
+  padding: 0.5rem;
   background-color: $secondary;
 
   img {
     height: 100%;
+  }
+
+  @include media-breakpoint-up(md) {
+    height: 5rem;
+    width: 5rem;
+    border-radius: 5rem;
+    padding: 0.75rem;
   }
 }
 

@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, Renderer2, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -31,7 +31,9 @@ import { Subject, take, takeUntil } from 'rxjs';
 })
 export class EffectListComponent implements AfterViewInit, OnDestroy {
   private unsubsribe: Subject<boolean> = new Subject();
-  public displayedColumns: string[] = ['name', 'school', 'type', 'action'];
+  private _unlistener: () => void;
+  private columns: string[] = ['name', 'school', 'type', 'action'];
+  public displayedColumns: string[] = [...this.columns];
   public dataSource: MatTableDataSource<Effect> = new MatTableDataSource();
 
   public ingredients: Map<string, string[]>;
@@ -49,6 +51,7 @@ export class EffectListComponent implements AfterViewInit, OnDestroy {
     private matSnackBar: MatSnackBar,
     private matDialog: MatDialog,
     private router: Router,
+    private renderer2: Renderer2,
     private effectService: EffectService,
     private ingredientService: IngredientService,
     private store: Store
@@ -79,6 +82,8 @@ export class EffectListComponent implements AfterViewInit, OnDestroy {
       .subscribe((effects: Effect[]) => {
         this.dataSource.data = effects;
       });
+
+    this.updateDisplayedColumns();
   }
 
   public ngAfterViewInit(): void {
@@ -92,9 +97,22 @@ export class EffectListComponent implements AfterViewInit, OnDestroy {
         this.expandedEffect = this.dataSource.data.find((effect: Effect) => effect.id === this.linkedEffectId);
       }
     }, 500);
+
+    this._unlistener = this.renderer2.listen('window', 'resize', () => {
+      this.updateDisplayedColumns();
+    });
+  }
+
+  private updateDisplayedColumns(): void {
+    if (window.innerWidth >= 768) {
+      this.displayedColumns = [...this.columns];
+    } else {
+      this.displayedColumns = [this.columns.at(0), this.columns.at(this.columns.length - 1)];
+    }
   }
 
   public ngOnDestroy(): void {
+    this._unlistener();
     this.unsubsribe.next(false);
     this.unsubsribe.complete();
   }
