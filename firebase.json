@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "target": "skyrim-alchemy-admin",
+    "target": "skyrim-alchemy-app",
     "public": "dist/skyrim-alchemy-admin",
     "ignore": [
       "**/.*"
